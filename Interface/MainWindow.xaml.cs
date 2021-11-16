@@ -72,14 +72,20 @@ namespace Interface
 
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var httpClient = new HttpClient();
-
-            var httpResponse = await httpClient.PostAsync("https://localhost:44343/api/messaging", httpContent);
-
-            if (httpResponse.Content != null)
+            HttpClient httpClient = new HttpClient();
+            try
             {
-                var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                listBoxMain.Items.Add(responseContent);
+                HttpResponseMessage httpResponse = await httpClient.PostAsync("https://localhost:44343/api/messaging", httpContent);
+
+                if (httpResponse.Content != null)
+                {
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    listBoxMain.Items.Add(responseContent.Trim());
+                }
+            }
+            catch (Exception ex)
+            {
+                listBoxMain.Items.Add(ex.Message);
             }
         }
 

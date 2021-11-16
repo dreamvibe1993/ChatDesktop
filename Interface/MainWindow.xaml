@@ -9,60 +9,73 @@
     Width="271.591"
     Height="439.205"
     mc:Ignorable="d">
-    <Grid Margin="0,0,2.8,-0.4">
-        <ListBox
-            x:Name="listBoxMain"
-            Width="242"
-            Height="204"
-            Margin="10,10,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
-        <Label
-            x:Name="labelMain"
-            Width="107"
-            Height="28"
-            Margin="10,219,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Connection ID: "
-            FontSize="14" />
-        <TextBlock
-            x:Name="tbMain"
-            Width="57"
-            Height="28"
-            Margin="117,219,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="6                          "
-            Text="Not Connected"
-            TextWrapping="Wrap" />
-        <Button
-            x:Name="btnConnect"
-            Width="73"
-            Height="28"
-            Margin="179,219,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="Button_Click"
-            Content="Connect" />
-        <TextBox
-            x:Name="MessageTextField"
-            Width="164"
-            Height="148"
-            Margin="10,252,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Text="Type your message here"
-            TextChanged="MessageTextField_TextChanged"
-            TextWrapping="Wrap" />
-        <Button
-            x:Name="SendButton"
-            Width="73"
-            Height="73"
-            Margin="179,327,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Click="SendButton_Click"
-            Content="Send" />
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <DockPanel
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Margin="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <ListBox x:Name="listBoxMain" />
+        </DockPanel>
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <Label
+                x:Name="labelMain"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Content="CONNECTION ID: "
+                FontSize="14" />
+            <TextBlock
+                x:Name="tbMain"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                FontSize="12"
+                Text="not connected"
+                TextWrapping="Wrap" />
+        </StackPanel>
+        <DockPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="5">
+            <Button
+                x:Name="btnConnect"
+                Click="Button_Click"
+                Content="Connect" />
+        </DockPanel>
+        <DockPanel
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="5"
+            VerticalAlignment="Stretch">
+            <TextBox
+                x:Name="MessageTextField"
+                Text="Type your message here"
+                TextChanged="MessageTextField_TextChanged"
+                TextWrapping="Wrap" />
+        </DockPanel>
+        <DockPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="5">
+            <Button
+                x:Name="SendButton"
+                Click="SendButton_Click"
+                Content="Send" />
+        </DockPanel>
     </Grid>
 </Window>
