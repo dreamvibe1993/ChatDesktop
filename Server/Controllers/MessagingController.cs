@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using SignalrServer.Hubs;
 
 namespace SignalrServer.Controllers
@@ -19,9 +21,11 @@ namespace SignalrServer.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] object value)
         {
-            _hubContext.Clients.All.SendAsync("Posted", value);
+            Debug.WriteLine("messaging: ");
+            Debug.WriteLine(value);
+            _hubContext.Clients.All.SendAsync("Posted", value.ToString());
 
         }
     }

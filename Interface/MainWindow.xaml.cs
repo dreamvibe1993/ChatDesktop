@@ -1,24 +1,14 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+using Interface.Classes;
+using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
 namespace Interface
 {
     /// <summary>
@@ -49,7 +39,8 @@ namespace Interface
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    listBoxMain.Items.Add(value);
+                    Message DeserializedMessage = JsonConvert.DeserializeObject<Message>(value);
+                    listBoxMain.Items.Add(DeserializedMessage.txt);
                 }));
             });
             try
@@ -67,21 +58,16 @@ namespace Interface
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
         {
+            Message Message = new Message() { name = "test", id = "test2", txt = Msg };
 
-            string json = new JavaScriptSerializer().Serialize(Msg);
+            string json = JsonConvert.SerializeObject(Message);
 
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpClient httpClient = new HttpClient();
             try
             {
                 HttpResponseMessage httpResponse = await httpClient.PostAsync("https://localhost:44343/api/messaging", httpContent);
-
-                if (httpResponse.Content != null)
-                {
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync();
-                    listBoxMain.Items.Add(responseContent.Trim());
-                }
             }
             catch (Exception ex)
             {
